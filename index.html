@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You My Lanceyy 🖤</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #6a6328, #24243e);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* PASSWORD SCREEN */
+#passwordScreen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    padding: 12px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    width: 220px;
+    text-align: center;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    margin-top: 15px;
+    background: #ff4e7a;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff1e56;
+}
+
+/* MAIN CONTENT */
+#mainContent {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+}
+#mainContent button {
+    margin: 10px 5px; /* top/bottom 10px, left/right 5px */
+}
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.gallery {
+    column-count: 3;
+    column-gap: 15px;
+    max-width: 1000px;
+    margin: auto;
+    display: none;
+    margin-top: 30px;
+}
+
+.gallery img, video {
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    break-inside: avoid;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    transition: transform 0.4s ease;
+}
+
+.gallery img:hover, video:hover {
+    transform: scale(1.03);
+}
+
+/* LOVE LETTER POPUP */
+#letterPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.letterContent {
+    background: #1e1e2f;
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 500px;
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.8);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+    color: #1e90ff; /* DodgerBlue */
+    text-shadow: 0 0 5px #1e90ff, 0 0 10px #1e90ff;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* FEATURED COUPLE PHOTO */
+.featured-photo {
+    margin: 40px auto 60px auto; /* more bottom spacing before buttons */
+    max-width: 400px;
+    position: relative;
+}
+
+.featured-photo img {
+    width: 100%;
+    border-radius: 25px;
+    box-shadow: 0 0 40px rgba(255, 30, 86, 0.5);
+    transition: transform 0.5s ease;
+}
+
+.featured-photo img:hover {
+    transform: scale(1.05);
+}
+
+.featured-caption {
+    margin-top: 15px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* VIDEO + SIDE IMAGES */
+.video-section {
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* slightly bigger gap */
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.video-section video {
+    width: 350px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.side-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* more space between side images */
+}
+
+.side-images img {
+    width: 180px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    transition: transform 0.4s ease;
+}
+
+.side-images img:hover {
+    transform: scale(1.05);
+}
+
+/* GALLERY (hidden until button clicked) */
+.gallery {
+    column-count: 3;
+    column-gap: 20px;
+    max-width: 1000px;
+    margin: 30px auto 60px auto; /* top & bottom spacing */
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="passwordScreen">
+    <h1>Enter Our Secret 💙</h1>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Unlock</button>
+    <p id="error" style="color:#ff4e7a;"></p>
+</div>
+
+<!-- MAIN WEBSITE -->
+<div id="mainContent">
+    <h1>My Forever Person 💙</h1>
+    <p>Every moment with you feels like magic.</p>
+
+    <div class="featured-photo">
+    <img src="T1.jpg" alt="Us Together">
+    <div class="featured-caption">
+        My favorite place is right next to you 💙
+    </div>
+</div>
+
+    <button onclick="openLetter()">Letter For You 💌</button>
+    <button onclick="romanticSurprise()" style="margin-left:10px; background:#1b3d8a;">
+    Do You Love Me 😌
+</button>
+<button onclick="toggleGallery()" style="background:#b0a85e;">
+     Our Memories 📸
+</button>
+
+    <div class="gallery">
+        <img src="T1.jpg">
+        <img src="T2.jpg">
+        <div class="video-section">
+    <video id="ourVideo" controls>
+        <source src="V0.mp4" type="video/mp4">
+    </video>
+
+    <div class="side-images">
+        <img src="K3.jpg">
+        <img src="K4.jpg">
+        
+    </div>
+</div>
+    </div>
+</div>
+
+<!-- LOVE LETTER -->
+<div id="letterPopup">
+    <div class="letterContent">
+        <h2>To My Lanceyy 💙</h2>
+        <p>
+            From the moment you walked into my life,  
+everything became softer, brighter, and warmer.  
+You are my safe place, my favorite memory,  
+and my forever person.
+
+I love the way you make ordinary days feel special.
+I love the way you understand me without me saying a word.
+With you, I feel calm. I feel chosen. I feel home.
+
+Please drive safe always, okay?  
+Every time you leave somewhere, I silently pray for your safety.  
+Your life is precious to me. You are precious to me.
+
+And even if we’re not living under the same roof yet,
+I’ll be waiting patiently for that day —
+the day we wake up next to each other,
+the day we build our little life together,
+the day I get to call the same place home as you.
+
+Until then, I’ll keep loving you in every way I can.
+You are my today, my tomorrow,
+and every dream in between. 💙
+        </p>
+        <button onclick="closeLetter()">Close</button>
+    </div>
+</div>
+
+<!-- SURPRISE POPUP -->
+<div id="surprisePopup" style="
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: radial-gradient(circle, rgba(255,0,100,0.4), black);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+">
+    <h1 style="font-size:3em;">I Love You So Much 💙</h1>
+    <p style="font-size:1.3em; max-width:500px;">
+        You are the best thing that ever happened to me.
+        Drive safe always, okay? I’ll always be waiting for you.
+        And one day, we’ll finally live under the same roof.
+    </p>
+    <button onclick="closeSurprise()">Close</button>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" src="music.mp3"></audio>
+
+<script>
+// PASSWORD
+const correctPassword = "lanceyy";
+
+function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    if (input === correctPassword) {
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        startHearts();
+    } else {
+        document.getElementById("error").innerText = "Wrong password 🖤";
+    }
+}
+
+// VIDEO + MUSIC SYNC
+const video = document.getElementById("ourVideo");
+const music = document.getElementById("bgMusic");
+
+video.addEventListener("play", () => {
+    music.currentTime = 0;
+    music.play();
+});
+
+video.addEventListener("pause", () => {
+    music.pause();
+});
+
+video.addEventListener("ended", () => {
+    music.pause();
+    music.currentTime = 0;
+});
+
+// LOVE LETTER
+function openLetter() {
+    document.getElementById("letterPopup").style.display = "flex";
+}
+
+function closeLetter() {
+    document.getElementById("letterPopup").style.display = "none";
+}
+
+// FLOATING HEARTS
+function startHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💙";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 15 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }, 500);
+}
+
+// SURPRISE EXPLOSION
+function romanticSurprise() {
+    const popup = document.getElementById("surprisePopup");
+    popup.style.display = "flex";
+
+    for (let i = 0; i < 40; i++) {
+        const heart = document.createElement("div");
+        heart.innerHTML = "💖";
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = Math.random() * 30 + 20 + "px";
+        heart.style.pointerEvents = "none";
+        heart.style.transition = "all 1.5s ease-out";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = Math.random() * 100 + "vh";
+            heart.style.opacity = "0";
+        }, 50);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 1600);
+    }
+}
+
+function closeSurprise() {
+    document.getElementById("surprisePopup").style.display = "none";
+}
+function toggleGallery() {
+    const gallery = document.querySelector(".gallery");
+
+    if (gallery.style.display === "none" || gallery.style.display === "") {
+        gallery.style.display = "block";
+    } else {
+        gallery.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
